@@ -1,0 +1,51 @@
+AppBundle\Entity\TaskCollectionItem:
+    type: entity
+    table: task_collection_item
+    uniqueConstraints:
+        task_collection_item_unique:
+            columns:
+                - parent_id
+                - task_id
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        position:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        parent:
+            targetEntity: AppBundle\Entity\TaskCollection
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: items
+            joinColumns:
+                parent_id:
+                    referencedColumnName: id
+                    onDelete: 'SET NULL'
+            orphanRemoval: false
+        task:
+            targetEntity: AppBundle\Entity\Task
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                task_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

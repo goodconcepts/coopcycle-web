@@ -1,0 +1,67 @@
+AppBundle\Entity\Menu\MenuItem:
+    type: entity
+    table: menu_item
+    id: {  }
+    fields:
+        deletedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: deleted_at
+        isAvailable:
+            type: boolean
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            options:
+                default: true
+            column: is_available
+        price:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        description:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        name:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    manyToOne:
+        section:
+            targetEntity: AppBundle\Entity\Menu\MenuSection
+            cascade:
+                - all
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: items
+            joinColumns:
+                parent_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        modifiers:
+            targetEntity: AppBundle\Entity\Menu\MenuItemModifier
+            cascade:
+                - all
+            fetch: LAZY
+            mappedBy: menuItem
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    lifecycleCallbacks: {  }

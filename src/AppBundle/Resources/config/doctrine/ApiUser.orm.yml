@@ -1,0 +1,136 @@
+AppBundle\Entity\ApiUser:
+    type: entity
+    table: api_user
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        givenName:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: given_name
+        familyName:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: family_name
+        telephone:
+            type: phone_number
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    manyToMany:
+        restaurants:
+            targetEntity: AppBundle\Entity\Restaurant
+            cascade:
+                - all
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: api_user_restaurant
+                schema: null
+                inverseJoinColumns:
+                    -
+                        name: restaurant_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+                joinColumns:
+                    -
+                        name: api_user_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        stores:
+            targetEntity: AppBundle\Entity\Store
+            cascade:
+                - all
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: api_user_store
+                schema: null
+                inverseJoinColumns:
+                    -
+                        name: store_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+                joinColumns:
+                    -
+                        name: api_user_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        addresses:
+            targetEntity: AppBundle\Entity\Address
+            cascade:
+                - all
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: api_user_address
+                schema: null
+                inverseJoinColumns:
+                    -
+                        name: address_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+                joinColumns:
+                    -
+                        name: api_user_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        stripeParams:
+            targetEntity: AppBundle\Entity\StripeParams
+            cascade:
+                - all
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: api_user_stripe_params
+                schema: null
+                joinColumns:
+                    -
+                        name: api_user_id
+                        unique: true
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: stripe_params_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+    lifecycleCallbacks: {  }

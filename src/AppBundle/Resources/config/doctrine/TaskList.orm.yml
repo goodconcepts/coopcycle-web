@@ -1,0 +1,28 @@
+AppBundle\Entity\TaskList:
+    type: entity
+    table: task_list
+    uniqueConstraints:
+        task_list_unique:
+            columns:
+                - date
+                - courier_id
+    fields:
+        date:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        courier:
+            targetEntity: AppBundle\Entity\ApiUser
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                courier_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

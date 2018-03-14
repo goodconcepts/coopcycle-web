@@ -1,0 +1,49 @@
+AppBundle\Entity\Delivery\PricingRule:
+    type: entity
+    table: pricing_rule
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        expression:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        price:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        position:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    manyToOne:
+        ruleSet:
+            targetEntity: AppBundle\Entity\Delivery\PricingRuleSet
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: rules
+            joinColumns:
+                rule_set_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

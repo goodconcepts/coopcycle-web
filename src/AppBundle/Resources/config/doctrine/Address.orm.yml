@@ -1,0 +1,98 @@
+AppBundle\Entity\Address:
+    type: entity
+    table: address
+    indexes:
+        idx_address_geo:
+            columns:
+                - geo
+            flags:
+                - spatial
+    options:
+        spatial_indexes:
+            - idx_address_geo
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        description:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        floor:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        geo:
+            type: geography
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            options:
+                geometry_type: GEOMETRY
+                srid: 4326
+            requireSQLConversion: true
+        addressCountry:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: address_country
+        addressLocality:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: address_locality
+        addressRegion:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: address_region
+        postalCode:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: postal_code
+        postOfficeBoxNumber:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: post_office_box_number
+        streetAddress:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: street_address
+    lifecycleCallbacks: {  }

@@ -1,0 +1,24 @@
+AppBundle\Entity\StripeParams:
+    type: entity
+    table: stripe_params
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        userId:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: user_id
+    lifecycleCallbacks: {  }

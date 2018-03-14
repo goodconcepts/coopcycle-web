@@ -1,0 +1,47 @@
+AppBundle\Entity\TaskEvent:
+    type: entity
+    table: task_event
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        notes:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        createdAt:
+            type: datetime
+            column: created_at
+            gedmo:
+                timestampable:
+                    on: create
+    manyToOne:
+        task:
+            targetEntity: AppBundle\Entity\Task
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: events
+            joinColumns:
+                task_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

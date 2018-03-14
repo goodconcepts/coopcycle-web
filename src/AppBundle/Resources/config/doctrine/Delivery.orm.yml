@@ -1,0 +1,138 @@
+AppBundle\Entity\Delivery:
+    type: entity
+    table: delivery
+    repositoryClass: AppBundle\Entity\DeliveryRepository
+    id: {  }
+    fields:
+        status:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        date:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        price:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        weight:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        vehicle:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        totalExcludingTax:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: total_excluding_tax
+        totalTax:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: total_tax
+        totalIncludingTax:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: total_including_tax
+    manyToOne:
+        originAddress:
+            targetEntity: AppBundle\Entity\Address
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                origin_address_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        deliveryAddress:
+            targetEntity: AppBundle\Entity\Address
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                delivery_address_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        store:
+            targetEntity: AppBundle\Entity\Store
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: deliveries
+            joinColumns:
+                store_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        taxCategory:
+            targetEntity: Sylius\Component\Taxation\Model\TaxCategory
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tax_category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToOne:
+        order:
+            targetEntity: AppBundle\Entity\Order
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: delivery
+            joinColumns:
+                order_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        events:
+            targetEntity: AppBundle\Entity\DeliveryEvent
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: delivery
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                createdAt: ASC
+    lifecycleCallbacks: {  }
+    entityListeners:
+        AppBundle\Entity\Listener\DeliveryListener:
+            prePersist:
+                - prePersist
+            postPersist:
+                - postPersist
+            postUpdate:
+                - postUpdate

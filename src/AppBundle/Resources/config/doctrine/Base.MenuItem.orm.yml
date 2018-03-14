@@ -1,0 +1,26 @@
+AppBundle\Entity\Base\MenuItem:
+    type: mappedSuperclass
+    table: menu_item
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    manyToOne:
+        taxCategory:
+            targetEntity: Sylius\Component\Taxation\Model\TaxCategory
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tax_category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,61 @@
+AppBundle\Entity\Product:
+    type: entity
+    table: product
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        price:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        description:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        name:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        suitableForDiet:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: suitable_for_diet
+        recipeCategory:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: recipe_category
+        recipeCuisine:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: recipe_cuisine
+    lifecycleCallbacks: {  }
