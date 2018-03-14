@@ -153,6 +153,24 @@ class EmbedController extends Controller
         ]);
     }
 
+    private function createOrder(Delivery $delivery)
+    {
+        $orderFactory = $this->container->get('sylius.factory.order');
+        $orderItemFactory = $this->container->get('sylius.factory.order_item');
+
+
+        $order = $orderFactory->createNew();
+        $orderItem = $orderItemFactory->createNew();
+
+        $orderItem->setUnitPrice($delivery->getTotalIncludingTax() * 100);
+
+        $order->addItem($orderItem);
+        $this->container->get('sylius.order_item_quantity_modifier')->modify($orderItem, 1);
+        $this->container->get('sylius.order_processing.order_processor')->process($order);
+
+        return $order;
+    }
+
     /**
      * @Route("/embed/delivery/process", name="embed_delivery_process")
      * @Template
@@ -199,15 +217,14 @@ class EmbedController extends Controller
             $this->getDoctrine()->getManagerForClass(Delivery::class)->persist($delivery);
             $this->getDoctrine()->getManagerForClass(Delivery::class)->flush();
 
-            // Create a StripePayment & store it in database
-            $stripePayment = StripePayment::create($user, $delivery);
+            $order = $this->createOrder($delivery);
 
-            $this->getDoctrine()->getManagerForClass(StripePayment::class)->persist($stripePayment);
-            $this->getDoctrine()->getManagerForClass(StripePayment::class)->flush();
+            $orderRepository = $this->container->get('sylius.repository.order');
+            $orderRepository->add($order);
 
             // Send confirmation email
-            $email = $form->get('email')->getData();
-            $notificationManager->notifyDeliveryToBeConfirmed($delivery, $email);
+            // $email = $form->get('email')->getData();
+            // $notificationManager->notifyDeliveryToBeConfirmed($delivery, $email);
 
             $this->addFlash(
                 'notice',
