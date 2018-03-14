@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Delivery;
+use AppBundle\Entity\DeliveryOrder;
+use AppBundle\Entity\DeliveryOrderItem;
 use AppBundle\Entity\Delivery\PricingRuleSet;
 use AppBundle\Entity\StripePayment;
 use AppBundle\Entity\Task;
@@ -158,7 +160,6 @@ class EmbedController extends Controller
         $orderFactory = $this->container->get('sylius.factory.order');
         $orderItemFactory = $this->container->get('sylius.factory.order_item');
 
-
         $order = $orderFactory->createNew();
         $orderItem = $orderItemFactory->createNew();
 
@@ -221,6 +222,15 @@ class EmbedController extends Controller
 
             $orderRepository = $this->container->get('sylius.repository.order');
             $orderRepository->add($order);
+
+            $deliveryOrder = new DeliveryOrder($order, $user);
+            $deliveryOrderItem = new DeliveryOrderItem($order->getItems()->get(0), $delivery);
+
+            $this->getDoctrine()->getManagerForClass(DeliveryOrder::class)->persist($deliveryOrder);
+            $this->getDoctrine()->getManagerForClass(DeliveryOrderItem::class)->persist($deliveryOrderItem);
+
+            $this->getDoctrine()->getManagerForClass(DeliveryOrder::class)->flush();
+            $this->getDoctrine()->getManagerForClass(DeliveryOrderItem::class)->flush();
 
             // Send confirmation email
             // $email = $form->get('email')->getData();
