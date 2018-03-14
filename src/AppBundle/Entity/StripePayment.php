@@ -4,16 +4,8 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Model\TaxableTrait;
 use Doctrine\Common\Util\ClassUtils;
-use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
-/**
- * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
- * @ORM\Table(uniqueConstraints={
- *   @ORM\UniqueConstraint(name="stripe_payment_unique", columns={"resource_class", "resource_id"})}
- * )
- */
 class StripePayment
 {
     use TaxableTrait;
@@ -21,48 +13,23 @@ class StripePayment
     const STATUS_PENDING = 'PENDING';
     const STATUS_CAPTURED = 'CAPTURED';
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
     protected $id;
 
     /**
-     * @var stringt
-     *
-     * @ORM\Column("uuid")
+     * @var string
      */
     private $uuid;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="ApiUser")
-     */
     protected $user;
 
-    /**
-     * @ORM\Column(type="string")
-     */
     protected $resourceClass;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
     protected $resourceId;
 
-    /**
-     * @ORM\Column(type="string")
-     */
     protected $status = self::STATUS_PENDING;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
     protected $charge;
 
-    /**
-     * @ORM\PrePersist()
-     */
     public function prePersist() {
         $this->uuid = Uuid::uuid4()->toString();
     }

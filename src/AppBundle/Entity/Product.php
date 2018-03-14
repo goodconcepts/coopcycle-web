@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Base\Thing;
-use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +13,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *
  * @see http://schema.org/Product Documentation on Schema.org
  *
- * @ORM\Entity
  * @ApiResource(iri="http://schema.org/Product")
  */
 class Product extends Thing
@@ -23,10 +21,6 @@ class Product extends Thing
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
 
@@ -41,7 +35,6 @@ class Product extends Thing
      *            - Use values from 0123456789 (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similiar Unicode symbols.
      *
      * @Groups({"restaurant"})
-     * @ORM\Column(type="float", nullable=true)
      * @Assert\Type(type="float")
      * @ApiProperty(iri="https://schema.org/price")
      */

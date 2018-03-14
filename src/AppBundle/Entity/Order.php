@@ -7,8 +7,6 @@ use AppBundle\Entity\Menu\Modifier;
 use AppBundle\Entity\Base\MenuItem;
 use AppBundle\Entity\Model\TaxableTrait;
 use AppBundle\Validator\Constraints\Order as AssertOrder;
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Ramsey\Uuid\Uuid;
@@ -23,10 +21,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @see http://schema.org/Order Documentation on Schema.org
  *
- * @ORM\Entity(repositoryClass="AppBundle\Entity\OrderRepository")
- * @ORM\EntityListeners({"AppBundle\Entity\Listener\OrderListener"})
- * @ORM\HasLifecycleCallbacks()
- * @ORM\Table(name="order_")
  * @ApiResource(iri="http://schema.org/Order",
  *   collectionOperations={
  *     "get"={"method"="GET"},
@@ -70,9 +64,6 @@ class Order
      * @var int
      *
      * @Groups({"order"})
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -80,8 +71,6 @@ class Order
      * @var ApiUser Party placing the order or paying the invoice.
      *
      * @Groups({"order"})
-     * @ORM\ManyToOne(targetEntity="ApiUser")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $customer;
 
@@ -89,8 +78,6 @@ class Order
      * @var Restaurant
      *
      * @Groups({"order_create", "order", "place"})
-     * @ORM\ManyToOne(targetEntity="Restaurant")
-     * @ORM\JoinColumn(nullable=false)
      * @ApiProperty(iri="https://schema.org/restaurant")
      */
     private $restaurant;
@@ -99,21 +86,15 @@ class Order
      * @var OrderItem The item ordered.
      *
      * @Groups({"order_create", "order"})
-     * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="order", cascade={"all"})
      */
     private $orderedItem;
 
-    /**
-     * @ORM\OneToMany(targetEntity="OrderEvent", mappedBy="order")
-     * @ORM\OrderBy({"createdAt" = "ASC"})
-     */
     private $events;
 
     /**
      * @var string
      *
      * @Groups({"order"})
-     * @ORM\Column(type="string", nullable=true)
      */
     private $status;
 
@@ -121,41 +102,30 @@ class Order
      * @Assert\NotNull
      * @Assert\Valid
      * @Groups({"order_create", "order"})
-     * @ORM\OneToOne(targetEntity="Delivery", mappedBy="order", cascade={"all"})
      */
     private $delivery;
 
     /**
      * The time the order should be ready.
-     * @ORM\Column(type="datetime")
+     *
      * @Groups({"order"})
      */
     private $readyAt;
 
     /**
-     * @Gedmo\Timestampable(on="create")
      * @Groups({"order"})
-     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
-    /**
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
-     */
     private $updatedAt;
 
     /**
-     * @var stringt
-     *
-     * @ORM\Column("uuid")
+     * @var string
      */
     private $uuid;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
     private $charge;
 
@@ -166,10 +136,6 @@ class Order
         $this->events = new ArrayCollection();
     }
 
-
-    /**
-     * @ORM\PrePersist()
-     */
     public function prePersist() {
         $this->uuid = Uuid::uuid4()->toString();
     }
