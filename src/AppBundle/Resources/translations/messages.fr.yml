@@ -293,6 +293,8 @@ form.delivery.store.placeholder: Rechercher un magasin…
 form.delivery.confirm.label: Confirmer
 form.delivery.to_be_confirmed.alert: Vous devez confirmer la livraison
 
+form.delivery_order.confirm.label: ✓ Confirmer la livraison
+
 form.address.addressLocality.label: Ville
 form.address.postalCode.label: Code postal
 form.address.floor.label: Étage

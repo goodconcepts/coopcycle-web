@@ -27,4 +27,9 @@ class DeliveryOrder
         $this->order = $order;
         $this->user = $user;
     }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

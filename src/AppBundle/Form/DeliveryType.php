@@ -141,12 +141,6 @@ class DeliveryType extends AbstractType
                 if (false === $options['free_pricing'] && null !== $options['pricing_rule_set']) {
                     $event->getForm()->get('pricingRuleSet')->setData($options['pricing_rule_set']->getId());
                 }
-
-                if ($delivery->getStatus() === Delivery::STATUS_TO_BE_CONFIRMED) {
-                    $form->add('confirm', SubmitType::class, [
-                        'label' => 'form.delivery.confirm.label'
-                    ]);
-                }
             }
         );
 

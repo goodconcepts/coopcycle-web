@@ -27,4 +27,9 @@ class DeliveryOrderItem
         $this->orderItem = $orderItem;
         $this->delivery = $delivery;
     }
+
+    public function getOrderItem()
+    {
+        return $this->orderItem;
+    }
 }

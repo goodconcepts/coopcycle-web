@@ -42,20 +42,20 @@ class DeliveryListener
         $this->dispatcher->dispatch(DeliveryCreateEvent::NAME, new DeliveryCreateEvent($delivery));
     }
 
-    public function postUpdate(Delivery $delivery, LifecycleEventArgs $args)
-    {
-        $unitOfWork = $args->getObjectManager()->getUnitOfWork();
-        $entityChangeSet = $unitOfWork->getEntityChangeSet($delivery);
+    // public function postUpdate(Delivery $delivery, LifecycleEventArgs $args)
+    // {
+    //     $unitOfWork = $args->getObjectManager()->getUnitOfWork();
+    //     $entityChangeSet = $unitOfWork->getEntityChangeSet($delivery);
 
-        if (isset($entityChangeSet['status'])) {
+    //     if (isset($entityChangeSet['status'])) {
 
-            [ $oldValue, $newValue ] = $entityChangeSet['status'];
+    //         [ $oldValue, $newValue ] = $entityChangeSet['status'];
 
-            $hasBeenConfirmed = $oldValue === Delivery::STATUS_TO_BE_CONFIRMED && $newValue === Delivery::STATUS_CONFIRMED;
+    //         $hasBeenConfirmed = $oldValue === Delivery::STATUS_TO_BE_CONFIRMED && $newValue === Delivery::STATUS_CONFIRMED;
 
-            if ($hasBeenConfirmed) {
-                $this->dispatcher->dispatch(DeliveryConfirmEvent::NAME, new DeliveryConfirmEvent($delivery));
-            }
-        }
-    }
+    //         if ($hasBeenConfirmed) {
+    //             $this->dispatcher->dispatch(DeliveryConfirmEvent::NAME, new DeliveryConfirmEvent($delivery));
+    //         }
+    //     }
+    // }
 }
